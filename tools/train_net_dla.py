@@ -27,7 +27,7 @@ from detectron2.config import get_cfg
 from detectron2.data import MetadataCatalog
 from detectron2.engine import DefaultTrainer, default_argument_parser, default_setup, hooks, launch
 from detectron2.evaluation import (
-    CityscapesEvaluator,
+    #CityscapesEvaluator,
     COCOEvaluator,
     COCOPanopticEvaluator,
     DatasetEvaluators,
@@ -132,15 +132,15 @@ if __name__ == "__main__":
     register_coco_instances(
         "dla_train",
         {},
-        "./data/train/train0123.json",
-        "./data/train/images"
+        "../publaynet/train.json",
+        "../publaynet/train"
     )
 
     register_coco_instances(
         "dla_val",
         {},
-        "./data/val/dev.json",
-        "./data/val/images"
+        "../publaynet/val.json",
+        "../publaynet/val"
     )
 
     metadata_train = MetadataCatalog.get("dla_train")

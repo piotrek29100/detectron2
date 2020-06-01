@@ -40,7 +40,7 @@ def get_parser():
     )
     parser.add_argument("--webcam", action="store_true", help="Take inputs from webcam.")
     parser.add_argument("--video-input", help="Path to video file.")
-    parser.add_argument("--input", nargs="+", help="A list of space separated input images")
+    parser.add_argument("--input", nargs="+", help="A list of space separated input images or dirs")
     parser.add_argument(
         "--output",
         help="A file or directory to save output visualizations. "
@@ -70,7 +70,13 @@ if __name__ == "__main__":
 
     cfg = setup_cfg(args)
 
-    demo = VisualizationDemo(cfg)
+    from detectron2.data.catalog import Metadata
+    metadata = Metadata(
+        evaluator_type='coco',
+        name='PubLayNet',
+        thing_classes=["text", "title", "list", "figure", "table"]
+    )
+    demo = VisualizationDemo(cfg, metadata)
 
     if args.input:
         if len(args.input) == 1:
