@@ -25,12 +25,7 @@ class PredictorApi:
 
         cfg = self._setup_cfg(
             config_path,
-            [
-                "MODEL.WEIGHTS",
-                model_weights_path,
-                "MODEL.DEVICE",
-                model_device,
-            ],
+            ["MODEL.WEIGHTS", model_weights_path, "MODEL.DEVICE", model_device,],
             0.5,
         )
 
@@ -62,13 +57,13 @@ class PredictorApi:
 
         for i, image in enumerate(images):
             self.predictor.put(image)
-        
+
             if i >= buffer_size:
                 yield self._get_prediction(start_time)
 
         while len(self.predictor) > 0:
             yield self._get_prediction(start_time)
-            
+
     def _get_prediction(self, start_time):
         predictions = self.predictor.get()
 
@@ -76,6 +71,8 @@ class PredictorApi:
 
         _classes = predictions["instances"].pred_classes.cpu().numpy()
         _boxes = predictions["instances"].pred_boxes.tensor.cpu().numpy()
+        _scores = predictions["instances"].scores.cpu().numpy()
 
-        return np.concatenate([_classes.reshape(-1, 1), _boxes], axis=1)
-                
+        return np.concatenate(
+            [_classes.reshape(-1, 1), _boxes, _scores.reshape(-1, 1)], axis=1
+        )

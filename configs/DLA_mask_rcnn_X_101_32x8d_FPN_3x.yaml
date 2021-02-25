@@ -3,7 +3,7 @@ MODEL:
   MASK_ON: True
 #  WEIGHTS: "detectron2://ImageNetPretrained/FAIR/X-101-32x8d.pkl"
 #  WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_X_101_32x8d_FPN_3x/139653917/model_final_2d9806.pkl"
-  WEIGHTS: "../model_final_trimmed.pth"
+  WEIGHTS: "./output/20200605T0822/model_0159999.pth"
   PIXEL_STD: [57.375, 57.120, 58.395]
   ROI_HEADS:
     NUM_CLASSES: 5
@@ -17,7 +17,7 @@ DATASETS:
   TEST: ("dla_val",)
 SOLVER:
   STEPS: (210000, 250000)
-  MAX_ITER: 125500
+  MAX_ITER: 600000
   IMS_PER_BATCH: 2
   BASE_LR: 0.0009
 DATALOADER:
